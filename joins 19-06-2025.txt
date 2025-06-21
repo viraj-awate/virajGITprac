@@ -1,0 +1,162 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use viraj;
+Database changed
+mysql> create table students(stud_id int , stud_name varchar (50));
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> drop table students;
+Query OK, 0 rows affected (0.35 sec)
+
+mysql> show tables;
++-----------------+
+| Tables_in_viraj |
++-----------------+
+| emp             |
+| emp1            |
+| emp_view        |
+| movie           |
+| stud            |
+| student         |
++-----------------+
+6 rows in set (0.14 sec)
+
+mysql> create table Employee(emp_id int , emp_name varchar (50));
+Query OK, 0 rows affected (0.42 sec)
+
+mysql> create table Employee(emp_id int , dept varchar (50));
+ERROR 1050 (42S01): Table 'employee' already exists
+mysql> create table Department(emp_id int , dept varchar (50));
+Query OK, 0 rows affected (0.40 sec)
+
+mysql> drop table employee;
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> create table Employee(emp_id int , emp_name varchar (50),Address varchar(50));
+Query OK, 0 rows affected (0.52 sec)
+
+mysql> insert into Employee(1,'Viraj','pune'),(2,'Shulmit','pune'),(3,'Sai','Mumbai'),(4,'Ram','Chinchwad'),(5,'Varad','PCMC'),(6,'Raj','Pimpri');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,'Viraj','pune'),(2,'Shulmit','pune'),(3,'Sai','Mumbai'),(4,'Ram','Chinchwad'),' at line 1
+mysql> insert into Employee(1,'Viraj','pune'),(2,'Shulmit','pune'),(3,'Sai','Mumbai'),(4,'Ram','Chinchwad'),(5,'Varad','PCMC'),(6,'Raj','Pimpri');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,'Viraj','pune'),(2,'Shulmit','pune'),(3,'Sai','Mumbai'),(4,'Ram','Chinchwad'),' at line 1
+mysql> show tables;
++-----------------+
+| Tables_in_viraj |
++-----------------+
+| department      |
+| emp             |
+| emp1            |
+| emp_view        |
+| employee        |
+| movie           |
+| stud            |
+| student         |
++-----------------+
+8 rows in set (0.00 sec)
+
+mysql> insert into Employee values(1,'Viraj','pune'),(2,'Shulmit','pune'),(3,'Sai','Mumbai'),(4,'Ram','Chinchwad'),(5,'Varad','PCMC'),(6,'Raj','Pimpri');
+Query OK, 6 rows affected (0.12 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * Employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Employee' at line 1
+mysql> select * from Employee;
++--------+----------+-----------+
+| emp_id | emp_name | Address   |
++--------+----------+-----------+
+|      1 | Viraj    | pune      |
+|      2 | Shulmit  | pune      |
+|      3 | Sai      | Mumbai    |
+|      4 | Ram      | Chinchwad |
+|      5 | Varad    | PCMC      |
+|      6 | Raj      | Pimpri    |
++--------+----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> insert into Department values(1,'Marketing'),(2,'Sales'),(3,'HR'),(4,'Finance'),(5,'HR'),(6,'Sales');
+Query OK, 6 rows affected (0.14 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from depeartment;
+ERROR 1146 (42S02): Table 'viraj.depeartment' doesn't exist
+mysql> select * from department;
++--------+-----------+
+| emp_id | dept      |
++--------+-----------+
+|      1 | Marketing |
+|      2 | Sales     |
+|      3 | HR        |
+|      4 | Finance   |
+|      5 | HR        |
+|      6 | Sales     |
++--------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee inner join department on employee.emp_id= department.stud_id
+    -> select * from employee inner join department on employee.emp_id= department.stud_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from employee inner join department on employee.emp_id= department.stud' at line 2
+mysql> ^C
+mysql> select * from employee inner join department on employee.emp_id= department.stud_id;
+ERROR 1054 (42S22): Unknown column 'department.stud_id' in 'on clause'
+mysql> select * from employee inner join department on employee.emp_id= department.emp_id;
++--------+----------+-----------+--------+-----------+
+| emp_id | emp_name | Address   | emp_id | dept      |
++--------+----------+-----------+--------+-----------+
+|      1 | Viraj    | pune      |      1 | Marketing |
+|      2 | Shulmit  | pune      |      2 | Sales     |
+|      3 | Sai      | Mumbai    |      3 | HR        |
+|      4 | Ram      | Chinchwad |      4 | Finance   |
+|      5 | Varad    | PCMC      |      5 | HR        |
+|      6 | Raj      | Pimpri    |      6 | Sales     |
++--------+----------+-----------+--------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee left join department on employee.emp_id= department.emp_id;
++--------+----------+-----------+--------+-----------+
+| emp_id | emp_name | Address   | emp_id | dept      |
++--------+----------+-----------+--------+-----------+
+|      1 | Viraj    | pune      |      1 | Marketing |
+|      2 | Shulmit  | pune      |      2 | Sales     |
+|      3 | Sai      | Mumbai    |      3 | HR        |
+|      4 | Ram      | Chinchwad |      4 | Finance   |
+|      5 | Varad    | PCMC      |      5 | HR        |
+|      6 | Raj      | Pimpri    |      6 | Sales     |
++--------+----------+-----------+--------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee right join department on employee.emp_id= department.emp_id;
++--------+----------+-----------+--------+-----------+
+| emp_id | emp_name | Address   | emp_id | dept      |
++--------+----------+-----------+--------+-----------+
+|      1 | Viraj    | pune      |      1 | Marketing |
+|      2 | Shulmit  | pune      |      2 | Sales     |
+|      3 | Sai      | Mumbai    |      3 | HR        |
+|      4 | Ram      | Chinchwad |      4 | Finance   |
+|      5 | Varad    | PCMC      |      5 | HR        |
+|      6 | Raj      | Pimpri    |      6 | Sales     |
++--------+----------+-----------+--------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee cross join department on employee.emp_id= department.emp_id;
++--------+----------+-----------+--------+-----------+
+| emp_id | emp_name | Address   | emp_id | dept      |
++--------+----------+-----------+--------+-----------+
+|      1 | Viraj    | pune      |      1 | Marketing |
+|      2 | Shulmit  | pune      |      2 | Sales     |
+|      3 | Sai      | Mumbai    |      3 | HR        |
+|      4 | Ram      | Chinchwad |      4 | Finance   |
+|      5 | Varad    | PCMC      |      5 | HR        |
+|      6 | Raj      | Pimpri    |      6 | Sales     |
++--------+----------+-----------+--------+-----------+
+6 rows in set (0.01 sec)
